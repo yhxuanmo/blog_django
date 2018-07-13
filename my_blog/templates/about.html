@@ -5,7 +5,7 @@
  @Site：http://www.lyblogs.cn
 
  -->
-
+{% load static %}
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -14,15 +14,15 @@
     <meta http-equiv="Content-Language" content="zh-CN">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <title>不落阁 - 关于本站</title>
-    <link rel="shortcut icon" href="../images/Logo_40.png" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'images/Logo_40.png' %}" type="image/x-icon">
     <!--Layui-->
-    <link href="../plug/layui/css/layui.css" rel="stylesheet" />
+    <link href="{% static 'plug/layui/css/layui.css' %}" rel="stylesheet" />
     <!--font-awesome-->
-    <link href="../plug/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="{% static 'plug/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" />
     <!--全局样式表-->
-    <link href="../css/global.css" rel="stylesheet" />
+    <link href="{% static 'css/global.css' %}" rel="stylesheet" />
     <!-- 本页样式表 -->
-    <link href="../css/about.css" rel="stylesheet" />
+    <link href="{% static 'css/about.css' %}" rel="stylesheet" />
 </head>
 <body>
     <!-- 导航 -->
@@ -33,7 +33,7 @@
                 <i class="fa fa-qq"></i>
             </a>
             <a href="javascript:;" class="blog-user layui-hide">
-                <img src="../images/Absolutely.jpg" alt="Absolutely" title="Absolutely" />
+                <img src="{% static 'images/Absolutely.jpg' %}" alt="Absolutely" title="Absolutely" />
             </a>
             <!-- 不落阁 -->
             <a class="blog-logo" href="home.html">不落阁</a>
@@ -80,7 +80,7 @@
                         <div class="layui-tab-item">
                             <div class="aboutinfo">
                                 <div class="aboutinfo-figure">
-                                    <img src="../images/Logo_100.png" alt="不落阁" />
+                                    <img src="{% static 'images/Logo_100.png' %}" alt="不落阁" />
                                 </div>
                                 <p class="aboutinfo-nickname">不落阁</p>
                                 <p class="aboutinfo-introduce">一个.NET程序员的个人博客，记录博主学习和成长之路，分享.NET方面技术和源码</p>
@@ -111,7 +111,7 @@
                         <div class="layui-tab-item">
                             <div class="aboutinfo">
                                 <div class="aboutinfo-figure">
-                                    <img src="../images/Absolutely.jpg" alt="Absolutely" />
+                                    <img src="{% static 'images/Absolutely.jpg' %}" alt="Absolutely" />
                                 </div>
                                 <p class="aboutinfo-nickname">Absolutely</p>
                                 <p class="aboutinfo-introduce">一枚90后程序员，.NET开发工程师，主攻B/S架构，略懂Web前端</p>
@@ -139,7 +139,7 @@
                         <div class="layui-tab-item">
                             <div class="aboutinfo">
                                 <div class="aboutinfo-figure">
-                                    <img src="../images/handshake.png" alt="友情链接" />
+                                    <img src="{% static 'images/handshake.png' %}" alt="友情链接" />
                                 </div>
                                 <p class="aboutinfo-nickname">友情链接</p>
                                 <p class="aboutinfo-introduce">Name：不落阁&nbsp;&nbsp;&nbsp;&nbsp;Site：www.lyblogs.cn</p>
@@ -181,7 +181,7 @@
                         <div class="layui-tab-item">
                             <div class="aboutinfo">
                                 <div class="aboutinfo-figure">
-                                    <img src="../images/messagewall.png" alt="留言墙" />
+                                    <img src="{% static 'images/messagewall.png' %}" alt="留言墙" />
                                 </div>
                                 <p class="aboutinfo-nickname">留言墙</p>
                                 <p class="aboutinfo-introduce">本页面可留言、吐槽、提问。欢迎灌水，杜绝广告！</p>
@@ -207,7 +207,7 @@
                                             <ul class="blog-comment">
                                                 <li>
                                                     <div class="comment-parent">
-                                                        <img src="../images/Logo_40.png" alt="不落阁" />
+                                                        <img src="{% static 'images/Logo_40.png' %}" alt="不落阁" />
                                                         <div class="info">
                                                             <span class="username">不落阁</span>
                                                         </div>
@@ -218,14 +218,14 @@
                                                     </div>
                                                     <hr />
                                                     <div class="comment-child">
-                                                        <img src="../images/Absolutely.jpg" alt="Absolutely" />
+                                                        <img src="{% static 'images/Absolutely.jpg' %}" alt="Absolutely" />
                                                         <div class="info">
                                                             <span class="username">Absolutely</span><span>这是用户回复内容</span>
                                                         </div>
                                                         <p class="info"><span class="time">2017-03-18 18:26</span></p>
                                                     </div>
                                                     <div class="comment-child">
-                                                        <img src="../images/Absolutely.jpg" alt="Absolutely" />
+                                                        <img src="{% static 'images/Absolutely.jpg' %}" alt="Absolutely" />
                                                         <div class="info">
                                                             <span class="username">Absolutely</span><span>这是第二个用户回复内容</span>
                                                         </div>
@@ -293,10 +293,10 @@
     <!--遮罩-->
     <div class="blog-mask animated layui-hide"></div>
     <!-- layui.js -->
-    <script src="../plug/layui/layui.js"></script>
+    <script src="{% static 'plug/layui/layui.js' %}"></script>
     <!-- 全局脚本 -->
-    <script src="../js/global.js"></script>
+    <script src="{% static 'js/global.js' %}"></script>
     <!-- 本页脚本 -->
-    <script src="../js/about.js"></script>
+    <script src="{% static 'js/about.js' %}"></script>
 </body>
 </html>

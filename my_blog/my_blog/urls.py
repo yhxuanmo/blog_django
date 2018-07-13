@@ -17,8 +17,13 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from home import views
 
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    # url(r'^home/', include('home.urls', namespace='home'))
-    url(r'^$', views.home)
+    url(r'^$', views.get_home),
+    url(r'^home/', include('home.urls', namespace='home')),
+    url(r'^about/', include('about.urls', namespace='about')),
+    url(r'^article/', include('article.urls', namespace='article')),
+    url(r'^resource/', include('resource.urls', namespace='resource')),
+    url(r'^timeline/', include('timeline.urls', namespace='timeline')),
 ]
