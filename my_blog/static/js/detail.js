@@ -30,18 +30,40 @@ layui.use(['form', 'layedit'], function () {
     form.on('submit(formRemark)', function (data) {
         var index = layer.load(1);
         //模拟评论提交
-        setTimeout(function () {
-            layer.close(index);
-            var content = data.field.editorContent;
-            var html = '<li><div class="comment-parent"><img src="../images/Absolutely.jpg"alt="absolutely"/><div class="info"><span class="username">Absolutely</span><span class="time">2017-03-18 18:46:06</span></div><div class="content">' + content + '</div></div></li>';
-            $('.blog-comment').append(html);
-            $('#remarkEditor').val('');
-            editIndex = layui.layedit.build('remarkEditor', {
-                height: 150,
-                tool: ['face', '|', 'left', 'center', 'right', '|', 'link'],
-            });
-            layer.msg("评论成功", { icon: 1 });
-        }, 500);
+        var csrf = $('input[name="csrfmiddlewaretoken"]').val()
+        var comment = data.field.editorContent;
+        var comment_data = {
+            'comment':comment,
+            'reader_name':'游客',
+            'head_img':'/static/images/Absolutely.jpg'
+        };
+
+        $.ajax({
+            url:'comment/',
+            type:'post',
+            datatype:'json',
+            data:comment_data,
+            headers:{'X-CSRFToken':csrf},
+            success:function (msg) {
+                if (msg.code == 200){
+                    layer.close(index);
+                    var content = data.field.editorContent;
+                    var html = '<li><div class="comment-parent"><img src="/static/images/Absolutely.jpg"alt="absolutely"/><div class="info"><span class="username">'+ comment_data.reader_name +'</span><span class="time">'+ msg.comment_time + '</span></div><div class="content">' + content + '</div></div></li>';
+                    $('.blog-comment').append(html);
+                    $('#remarkEditor').val('');
+                    editIndex = layui.layedit.build('remarkEditor', {
+                        height: 150,
+                        tool: ['face', '|', 'left', 'center', 'right', '|', 'link'],
+                    });
+                    layer.msg("评论成功", { icon: 1 });
+                }
+
+            },
+            error:function () {
+                alert('提交失败')
+            }
+        });
+
         return false;
     });
 });
