@@ -29,12 +29,13 @@
             </blockquote>
             <div class="blog-main">
                 <div class="blog-main-left">
-                    <div class="shadow" style="text-align:center;font-size:16px;padding:40px 15px;background:#fff;margin-bottom:15px;">
-                        未搜索到与【<span style="color: #FF5722;">keywords</span>】有关的文章，随便看看吧！
-                    </div>
+{#                    <div class="shadow" style="text-align:center;font-size:16px;padding:40px 15px;background:#fff;margin-bottom:15px;">#}
+{#                        未搜索到与【<span style="color: #FF5722;">keywords</span>】有关的文章，随便看看吧！#}
+{#                    </div>#}
                 </div>
                 {% verbatim %}
                 <script type="text/html" id="show_article">
+                {{ if articles }}
                 {{ each articles as article }}
                 <div class="article shadow">
                         <div class="article-left">
@@ -42,7 +43,7 @@
                         </div>
                         <div class="article-right">
                             <div class="article-title">
-                                <a href="detail/{{ article.id }}/">{{ article.title }}</a>
+                                <a href="/article/detail/{{ article.id }}/">{{ article.title }}</a>
                             </div>
                             <div class="article-abstract">
                                 {{ article.abstract }}
@@ -58,6 +59,11 @@
                         </div>
                     </div>
                 {{ /each }}
+                {{ else }}
+                <div class="shadow" style="text-align:center;font-size:16px;padding:40px 15px;background:#fff;margin-bottom:15px;">
+                        该分类还没有文章
+                    </div>
+                {{ /if }}
                 </script>
                 {% endverbatim %}
                 <div class="blog-main-right">
@@ -75,14 +81,18 @@
                     </div>
                     <div class="article-category shadow">
                         <div class="article-category-title">分类导航</div>
-                        <a href="javascript:layer.msg(&#39;切换到相应分类&#39;)">ASP.NET MVC</a>
-                        <a href="javascript:layer.msg(&#39;切换到相应分类&#39;)">SQL Server</a>
-                        <a href="javascript:layer.msg(&#39;切换到相应分类&#39;)">Entity Framework</a>
-                        <a href="javascript:layer.msg(&#39;切换到相应分类&#39;)">Web前端</a>
-                        <a href="javascript:layer.msg(&#39;切换到相应分类&#39;)">C#基础</a>
-                        <a href="javascript:layer.msg(&#39;切换到相应分类&#39;)">杂文随笔</a>
-                        <div class="clear"></div>
+
+
                     </div>
+                    {% verbatim %}
+                    <script type="text/html" id="show_tags">
+                        {{ each tags as tag }}
+                        <a href="javascript:void(0)" onclick="get_article_by_tag({{ tag.tag_id }})">{{ tag.tag_name }}</a>
+                        {{ /each }}
+                        <div class="clear"></div>
+                    </script>
+                    {% endverbatim %}
+
                     <div class="blog-module shadow">
                         <div class="blog-module-title">作者推荐</div>
                         <ul class="fa-ul blog-module-ul">
@@ -123,16 +133,59 @@
     {{ block.super }}
     <script type="text/javascript">
         layui.use(['jquery'], function () {
-        var $ = layui.jquery;
-        $('.fa-file-text').parent().parent().attr('class', 'layui-nav-item layui-this');
+            var $ = layui.jquery;
+            $('.fa-file-text').parent().parent().attr('class', 'layui-nav-item layui-this');
+            {#如果url中传递了参数，则请求分类文章，否则请求全部文章#}
+            if (location.search){
+                var url = '/article/tag/'+location.search.split('=')[1]
+                $.get(url,function (data) {
+                    if (data.code == 200){
+                        var article_html = template('show_article',{articles:data.article_list})
+                        $('.blog-main-left').html(article_html)
+                    }else if(data.code == 0){
+                        var article_html = template('show_article',{articles:data.article_list})
+                        $('.blog-main-left').html(article_html)
+                    }
+                })
+            }else {
 
-        $.get(url='/article/all/', function (data) {
+                $.get(url='/article/all/', function (data) {
+                    if (data.code == 200){
+                        var article_html = template('show_article',{articles:data.article_list})
+                        $('.blog-main-left').html(article_html)
+                    }
+                });
+            }
+            {#加载分类#}
+            $.get(url='/article/tags/',function (data) {
                 if (data.code == 200){
-
-                    var article_html = template('show_article',{articles:data.article_list})
-                    $('.blog-main-left').html(article_html)
+                    var tag_html = template('show_tags', {tags:data.tags})
+                    $('.article-category').append(tag_html)
                 }
+            });
+        });
+
+        {#分类点击，动态加载分类查询结果#}
+        function get_article_by_tag(id) {
+            {#发送请求的url#}
+            var get_url = '/article/tag/'+id + '/';
+            {#地址栏展示的url,只更新不跳转页面#}
+            var url = '/article/?tag='+id;
+            history.replaceState('更新当前url',null,url)
+            layui.use(['jquery'], function () {
+                var $ = layui.jquery;
+                $.get(get_url,function (data) {
+                    if (data.code == 200){
+                        var article_html = template('show_article',{articles:data.article_list})
+                        $('.blog-main-left').html(article_html)
+                    }else if(data.code == 0){
+                        var article_html = template('show_article',{articles:data.article_list})
+                        $('.blog-main-left').html(article_html)
+                    }
+                })
             })
-        })
+        }
+
+
     </script>
 {% endblock %}

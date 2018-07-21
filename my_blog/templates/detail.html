@@ -85,14 +85,15 @@
                     <div class="article-category shadow">
                         <div class="article-category-title">分类导航</div>
                         <!-- 点击分类后的页面和artile.html页面一样，只是数据是某一类别的 -->
-                        <a href="javascript:layer.msg(&#39;切换到相应分类&#39;)">ASP.NET MVC</a>
-                        <a href="javascript:layer.msg(&#39;切换到相应分类&#39;)">SQL Server</a>
-                        <a href="javascript:layer.msg(&#39;切换到相应分类&#39;)">Entity Framework</a>
-                        <a href="javascript:layer.msg(&#39;切换到相应分类&#39;)">Web前端</a>
-                        <a href="javascript:layer.msg(&#39;切换到相应分类&#39;)">C#基础</a>
-                        <a href="javascript:layer.msg(&#39;切换到相应分类&#39;)">杂文随笔</a>
-                        <div class="clear"></div>
                     </div>
+                    {% verbatim %}
+                    <script type="text/html" id="show_tags">
+                        {{ each tags as tag }}
+                        <a href="/article/?tag={{ tag.tag_id }}">{{ tag.tag_name }}</a>
+                        {{ /each }}
+                        <div class="clear"></div>
+                    </script>
+                    {% endverbatim %}
                     <div class="blog-module shadow">
                         <div class="blog-module-title">相似文章</div>
                         <ul class="fa-ul blog-module-ul">
@@ -129,8 +130,32 @@
     <script src="{% static 'js/detail.js' %}"></script>
     <script type="text/javascript">
         layui.use(['jquery'], function () {
-        var $ = layui.jquery;
-        $('.fa-file-text').parent().parent().attr('class', 'layui-nav-item layui-this')
-        })
+            var $ = layui.jquery;
+            $('.fa-file-text').parent().parent().attr('class', 'layui-nav-item layui-this');
+            $.get(url='/article/tags/',function (data) {
+                if (data.code == 200){
+                    var tag_html = template('show_tags', {tags:data.tags})
+                    $('.article-category').append(tag_html)
+                }
+            });
+        });
+
+        {#function get_article_by_tag(id) {#}
+        {#    var url = '/article/?tag=' + id#}
+        {#    history.replaceState({'xxx':'xxx'},null,url)#}
+        {#    layui.use(['jquery'], function () {#}
+        {#        var $ = layui.jquery;#}
+        {#        $.get(url,function (data) {#}
+        {#            if (data.code == 200){#}
+        {#                var article_html = template('show_article',{articles:data.article_list})#}
+        {#                $('.blog-main-left').html(article_html)#}
+        {#            }else if(data.code == 0){#}
+        {#                var article_html = template('show_article',{articles:data.article_list})#}
+        {#                $('.blog-main-left').html(article_html)#}
+        {#            }#}
+        {#        })#}
+        {#    })#}
+        {#}#}
+
     </script>
 {% endblock %}

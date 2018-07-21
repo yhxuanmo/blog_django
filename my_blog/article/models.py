@@ -13,6 +13,12 @@ class ArticleTag(models.Model):
     class Meta:
         db_table = 'tb_article_tag'
 
+    def to_dict(self):
+        return {
+            'tag_name':self.tag_name,
+            'tag_id':self.id
+        }
+
 
 
 class MyArticle(models.Model):
@@ -39,7 +45,7 @@ class MyArticle(models.Model):
             'title':self.title,
             'author': self.author,
             'abstract':self.abstract,
-            'tag': self.tag,
+            'tag': self.tag.tag_name,
             'create_time': self.create_time,
             'count_of_read': self.count_of_read,
             'count_of_comment':self.count_of_comment
@@ -51,7 +57,7 @@ class MyArticle(models.Model):
             'title': self.title,
             'author': self.author,
             'abstract': self.abstract,
-            'tag': self.tag,
+            'tag': self.tag.tag_name,
             'article':self.article,
             'create_time': self.create_time,
             'update_time':self.update_time,
