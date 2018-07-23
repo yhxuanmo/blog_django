@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'about',
     'article',
     'resource',
-    'timeline'
+    'timeline',
+    'my_background'
 ]
 
 MIDDLEWARE = [
