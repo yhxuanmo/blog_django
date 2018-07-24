@@ -13,16 +13,16 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="format-detection" content="telephone=no">
 {#	<link rel="icon" href="favicon.ico">#}
-	<link rel="stylesheet" href="{% static 'layui/css/layui.css' %}" media="all" />
-	<link rel="stylesheet" href="{% static 'css/bg_css/font_eolqem241z66flxr.css' %}" media="all" />
-	<link rel="stylesheet" href="{% static 'css/bg_css/main.css' %}" media="all" />
+	<link rel="stylesheet" href="{% static 'bg/layui/css/layui.css' %}" media="all" />
+	<link rel="stylesheet" href="{% static 'bg/css/font_eolqem241z66flxr.css' %}" media="all" />
+	<link rel="stylesheet" href="{% static 'bg/css/main.css' %}" media="all" />
 </head>
 <body class="main_body">
 	<div class="layui-layout layui-layout-admin">
 		<!-- 顶部 -->
 		<div class="layui-header header">
 			<div class="layui-main">
-				<a href="#" class="logo">layui后台管理</a>
+				<a href="{% url 'my_background:background' %}" class="logo">layui后台管理</a>
 				<!-- 搜索 -->
 				<div class="layui-form component">
 			        <select name="modules" lay-verify="required" lay-search="">
@@ -90,8 +90,8 @@
 							<cite>请叫我马哥</cite>
 						</a>
 						<dl class="layui-nav-child">
-							<dd><a href="javascript:;" data-url="page/user/userInfo.html"><i class="iconfont icon-zhanghu" data-icon="icon-zhanghu"></i><cite>个人资料</cite></a></dd>
-							<dd><a href="javascript:;" data-url="page/user/changePwd.html"><i class="iconfont icon-shezhi1" data-icon="icon-shezhi1"></i><cite>修改密码</cite></a></dd>
+							<dd><a href="javascript:;" data-url="page/user/userInfo/"><i class="iconfont icon-zhanghu" data-icon="icon-zhanghu"></i><cite>个人资料</cite></a></dd>
+							<dd><a href="javascript:;" data-url="page/user/changePwd/"><i class="iconfont icon-shezhi1" data-icon="icon-shezhi1"></i><cite>修改密码</cite></a></dd>
 							<dd><a href="javascript:;"><i class="iconfont icon-loginout"></i><cite>退出</cite></a></dd>
 						</dl>
 					</li>
@@ -139,9 +139,9 @@
 	<div class="site-tree-mobile layui-hide"><i class="layui-icon">&#xe602;</i></div>
 	<div class="site-mobile-shade"></div>
 
-	<script type="text/javascript" src="{% static 'layui/layui.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/bg_js/nav.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/bg_js/leftNav.js'%}"></script>
-	<script type="text/javascript" src="{% static 'js/bg_js/index.js' %}"></script>
+	<script type="text/javascript" src="{% static 'bg/layui/layui.js' %}"></script>
+	<script type="text/javascript" src="{% static 'bg/js/nav.js' %}"></script>
+	<script type="text/javascript" src="{% static 'bg/js/leftNav.js'%}"></script>
+	<script type="text/javascript" src="{% static 'bg/js/index.js' %}"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 layui.config({
-	base : "js/"
+	base : "/static/bg/js/"
 }).use(['form','layer','jquery','laypage'],function(){
 	var form = layui.form(),
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
@@ -90,7 +90,7 @@ layui.config({
 		var index = layui.layer.open({
 			title : "添加友情链接",
 			type : 2,
-			content : "linksAdd.html",
+			content : "/background/page/links/linksAdd/",
 			success : function(layero, index){
 				layui.layer.tips('点击此处返回文章列表', '.layui-layer-setwin .layui-layer-close', {
 					tips: 3

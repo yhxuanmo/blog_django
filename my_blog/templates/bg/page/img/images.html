@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,8 +10,8 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="format-detection" content="telephone=no">
-	<link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
-	<link rel="stylesheet" href="../../css/images.css" media="all" />
+	<link rel="stylesheet" href="{% static 'bg/layui/css/layui.css' %}" media="all" />
+	<link rel="stylesheet" href="{% static 'bg/css/images.css' %}" media="all" />
 </head>
 <body class="childrenBody">
 	<form class="layui-form">
@@ -27,7 +28,7 @@
 		</blockquote>
 		<ul id="Images"></ul>
 	</form>
-	<script type="text/javascript" src="../../layui/layui.js"></script>
-	<script type="text/javascript" src="images.js"></script>
+	<script type="text/javascript" src="{% static 'bg/layui/layui.js' %}"></script>
+	<script type="text/javascript" src="{% static 'bg/js/img/images.js' %}"></script>
 </body>
 </html>

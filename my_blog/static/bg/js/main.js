@@ -1,5 +1,5 @@
 layui.config({
-	base : "/static/js/bg_js/"
+	base : "/static/bg/js/"
 }).use(['form','element','layer','jquery'],function(){
 	var form = layui.form(),
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
