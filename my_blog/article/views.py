@@ -23,8 +23,9 @@ def show_all_article(request):
         articles = MyArticle.objects.all()
         article_list = []
         for article in articles:
-            article_info = article.main_to_dict()
-            article_list.append(article_info)
+            if article.is_show == 1:
+                article_info = article.main_to_dict()
+                article_list.append(article_info)
         data = {'code':200, 'article_list':article_list}
         return JsonResponse(data=data)
 
@@ -92,8 +93,9 @@ def get_article_by_tag(request, tag_id):
     if tag_article:
         article_list = []
         for article in tag_article:
-            article_info = article.main_to_dict()
-            article_list.append(article_info)
+            if article.is_show == 1:
+                article_info = article.main_to_dict()
+                article_list.append(article_info)
         data = {'code': 200, 'article_list': article_list}
     else:
         data= {'code': 0}

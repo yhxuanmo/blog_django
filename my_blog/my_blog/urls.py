@@ -26,5 +26,5 @@ urlpatterns = [
     url(r'^article/', include('article.urls', namespace='article')),
     url(r'^resource/', include('resource.urls', namespace='resource')),
     url(r'^timeline/', include('timeline.urls', namespace='timeline')),
-    url(r'background',include('my_background.urls', namespace='my_background')),
+    url(r'background/',include('my_background.urls', namespace='my_background')),
 ]

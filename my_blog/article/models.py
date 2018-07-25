@@ -6,7 +6,7 @@ class ArticleTag(models.Model):
     """
     文章分类标签
     """
-    tag_name = models.CharField(max_length=32, null=False)  # 文章标签
+    tag_name = models.CharField(max_length=32, null=False, unique=True)  # 文章标签
     create_time = models.DateTimeField(auto_now=datetime.now())  # 创建时间
     is_delete = models.BooleanField(default=0)  # 是否禁用
 
@@ -34,6 +34,9 @@ class MyArticle(models.Model):
     update_time = models.DateTimeField(auto_now=datetime.now(), null=False)  # 更新时间
     count_of_read = models.IntegerField(default=0, null=True)  # 阅读数
     count_of_comment = models.IntegerField(default=0, null=True)  # 评论数
+    recommend = models.BooleanField(default=0)  # 推荐
+    auditing = models.BooleanField(default=0)  # 审核
+    is_show = models.BooleanField(default=0)  # 展示
     tag = models.ForeignKey(ArticleTag)  # 标签
 
     class Meta:
@@ -48,7 +51,10 @@ class MyArticle(models.Model):
             'tag': self.tag.tag_name,
             'create_time': self.create_time,
             'count_of_read': self.count_of_read,
-            'count_of_comment':self.count_of_comment
+            'count_of_comment':self.count_of_comment,
+            'recommend':self.recommend,
+            'auditing':self.auditing,
+            'is_show':self.is_show
         }
 
     def all_to_dict(self):

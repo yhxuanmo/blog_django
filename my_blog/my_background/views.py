@@ -1,5 +1,7 @@
 from django.shortcuts import render
+from django.http import JsonResponse
 
+from article.models import MyArticle
 # Create your views here.
 def get_background(request):
     if request.method == 'GET':
@@ -63,4 +65,17 @@ def message_reply(request):
 
 def get_images(request):
     if request.method == 'GET':
-        return render(request,'bg/page/img/images.html' )
+        return render(request,'bg/page/img/images.html')
+
+def check_show_status(request, id):
+    if request.method == 'GET':
+        article = MyArticle.objects.filter(id=id).first()
+        if article.is_show == 0:
+            article.is_show = 1
+            article.save()
+        else:
+            article.is_show = 0
+            article.save()
+        data = {'code':200}
+        return JsonResponse(data)
+

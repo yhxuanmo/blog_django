@@ -8,7 +8,7 @@ layui.config({
 
 	//加载页面数据
 	var newsData = '';
-	$.get("../../json/newsList.json", function(data){
+	$.get("/article/all/", function(data){
 		var newArray = [];
 		//单击首页“待审核文章”加载的信息
 		if($(".top_tab li.layui-this cite",parent.document).text() == "待审核文章"){
@@ -24,7 +24,7 @@ layui.config({
         		}
         	}
         	newsData = newArray;
-        	newsList(newsData);
+        	newsList();
 		}else{    //正常加载信息
 			newsData = data;
 			if(window.sessionStorage.getItem("addNews")){
@@ -32,7 +32,7 @@ layui.config({
 				newsData = JSON.parse(addNews).concat(newsData);
 			}
 			//执行加载数据的方法
-			newsList();
+			newsList(newsData);
 		}
 	})
 
@@ -217,10 +217,17 @@ layui.config({
 	//是否展示
 	form.on('switch(isShow)', function(data){
 		var index = layer.msg('修改中，请稍候',{icon: 16,time:false,shade:0.8});
-        setTimeout(function(){
-            layer.close(index);
-			layer.msg("展示状态修改成功！");
-        },2000);
+		var id = $(this).attr('data-id');
+		var url = '/background/check_show_status/'+ id + '/'
+		$.get(url=url, function (data) {
+			if (data.code == 200){
+				setTimeout(function(){
+					layer.close(index);
+					layer.msg("展示状态修改成功！");
+				},2000);
+				}
+        })
+
 	})
  
 	//操作
@@ -259,26 +266,30 @@ layui.config({
 			if(!that){
 				currData = newsData.concat().splice(curr*nums-nums, nums);
 			}else{
-				currData = that.concat().splice(curr*nums-nums, nums);
+				currData = that.article_list;
 			}
 			if(currData.length != 0){
 				for(var i=0;i<currData.length;i++){
 					dataHtml += '<tr>'
 			    	+'<td><input type="checkbox" name="checked" lay-skin="primary" lay-filter="choose"></td>'
-			    	+'<td align="left">'+currData[i].newsName+'</td>'
-			    	+'<td>'+currData[i].newsAuthor+'</td>';
-			    	if(currData[i].newsStatus == "待审核"){
-			    		dataHtml += '<td style="color:#f00">'+currData[i].newsStatus+'</td>';
+			    	+'<td align="left">'+currData[i].title+'</td>'
+			    	+'<td>'+currData[i].author+'</td>';
+			    	if(currData[i].auditing == "0"){
+			    		dataHtml += '<td style="color:#f00">'+'待审核'+'</td>';
 			    	}else{
-			    		dataHtml += '<td>'+currData[i].newsStatus+'</td>';
-			    	}
-			    	dataHtml += '<td>'+currData[i].newsLook+'</td>'
-			    	+'<td><input type="checkbox" name="show" lay-skin="switch" lay-text="是|否" lay-filter="isShow"'+currData[i].isShow+'></td>'
-			    	+'<td>'+currData[i].newsTime+'</td>'
+			    		dataHtml += '<td>'+'审核通过'+'</td>';
+			    	};
+			    	dataHtml += '<td>'+'开放浏览'+'</td>';
+			    	if (currData[i].is_show == "0"){
+			    		dataHtml += '<td><input type="checkbox" name="show" lay-skin="switch" lay-text="是|否" lay-filter="isShow" data-id="'+currData[i].id+'"></td>'
+					}else{
+			    		dataHtml += '<td><input type="checkbox" name="show" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked data-id="'+currData[i].id+'"></td>'
+					};
+			    	dataHtml += '<td>'+currData[i].create_time+'</td>'
 			    	+'<td>'
 					+  '<a class="layui-btn layui-btn-mini news_edit"><i class="iconfont icon-edit"></i> 编辑</a>'
 					+  '<a class="layui-btn layui-btn-normal layui-btn-mini news_collect"><i class="layui-icon">&#xe600;</i> 收藏</a>'
-					+  '<a class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="'+data[i].newsId+'"><i class="layui-icon">&#xe640;</i> 删除</a>'
+					+  '<a class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="'+currData[i].id+'"><i class="layui-icon">&#xe640;</i> 删除</a>'
 			        +'</td>'
 			    	+'</tr>';
 				}
